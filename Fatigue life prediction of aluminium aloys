@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Randomly define material properties for an aluminium alloy
+sigma_f_prime = 450  # Fatigue strength coefficient (MPa)
+b = -0.09            # Fatigue strength exponent
+
+# Generate random stress amplitude data (say, 10 points between 50 and 400 MPa)
+stress_amplitudes = np.linspace(50, 400, 10)
+
+# Calculate fatigue life (Nf) using Basquin's equation
+fatigue_lives = (stress_amplitudes / sigma_f_prime) ** (1 / b) / 2
+
+# Display the data
+for stress, life in zip(stress_amplitudes, fatigue_lives):
+    print(f"Stress amplitude: {stress:.2f} MPa -> Fatigue life: {life:.2e} cycles")
+
+# Plotting
+plt.figure(figsize=(8,6))
+plt.loglog(fatigue_lives, stress_amplitudes, 'o-', label="Basquin Fit")
+plt.gca().invert_xaxis()
+plt.xlabel('Number of Cycles to Failure (Nf)')
+plt.ylabel('Stress Amplitude (MPa)')
+plt.title('Fatigue Life Prediction of Aluminium Alloy')
+plt.grid(True, which="both", ls="--")
+plt.legend()
+plt.show()
